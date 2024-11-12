@@ -1,4 +1,13 @@
 export const Matrix3 = {
+  projection: function (width, height) {
+    // Note: This matrix flips the Y axis so that 0 is at the top.
+    return [2 / width, 0, 0, 0, -2 / height, 0, -1, 1, 1];
+  },
+
+  identity: function () {
+    return [1, 0, 0, 0, 1, 0, 0, 0, 1];
+  },
+
   translation: function (tx, ty) {
     return [1, 0, 0, 0, 1, 0, tx, ty, 1];
   },
@@ -43,5 +52,17 @@ export const Matrix3 = {
       b20 * a01 + b21 * a11 + b22 * a21,
       b20 * a02 + b21 * a12 + b22 * a22,
     ];
+  },
+
+  translate: function (m, tx, ty) {
+    return this.multiply(m, this.translation(tx, ty));
+  },
+
+  rotate: function (m, angleInRadians) {
+    return this.multiply(m, this.rotation(angleInRadians));
+  },
+
+  scale: function (m, sx, sy) {
+    return this.multiply(m, this.scaling(sx, sy));
   },
 };

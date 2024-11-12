@@ -40,14 +40,14 @@ updateScene([0, 0], 0, [1, 1]);
 function updateScene(translation, angle, scale) {
   const angleInRadians = (angle * Math.PI) / 180;
 
-  const translationMatrix = Matrix3.translation(...translation);
-  const rotationMatrix = Matrix3.rotation(angleInRadians);
-  const scaleMatrix = Matrix3.scaling(...scale);
+  let matrix = Matrix3.projection(
+    gl.canvas.clientWidth,
+    gl.canvas.clientHeight
+  );
 
-  let matrix = Matrix3.multiply(translationMatrix, rotationMatrix);
-  matrix = Matrix3.multiply(matrix, scaleMatrix);
-
-  console.log("matrix :>> ", matrix);
+  matrix = Matrix3.translate(matrix, ...translation);
+  matrix = Matrix3.rotate(matrix, angleInRadians);
+  matrix = Matrix3.scale(matrix, ...scale);
 
   gl.uniformMatrix3fv(matrixLocation, false, matrix);
 
