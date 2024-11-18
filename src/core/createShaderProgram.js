@@ -24,12 +24,5 @@ export const createShaderProgram = (
 
   gl.useProgram(program);
 
-  const resolutionUniformLocation = gl.getUniformLocation(
-    program,
-    "u_resolution"
-  );
-
-  gl.uniform2f(resolutionUniformLocation, gl.canvas.width, gl.canvas.height);
-
   return program;
 };
